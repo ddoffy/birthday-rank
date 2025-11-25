@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Rank 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 class="text-2xl font-bold mb-6 text-center text-blue-600">Check Your Birthday Rank</h1>
+        
+        <form action="/" method="get" class="space-y-4">
+            <div>
+                <label for="month" class="block text-sm font-medium text-gray-700">Month</label>
+                <select id="month" name="month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md border">
+                    {% for m in months %}
+                    <option value="{{ m }}" {% if self.is_selected_month(m) %}selected{% endif %}>{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="day" class="block text-sm font-medium text-gray-700">Day</label>
+                <select id="day" name="day" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md border">
+                    {% for d in 1..=31 %}
+                    <option value="{{ d }}" {% if self.is_selected_day(d) %}selected{% endif %}>{{ d }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Check Rank
+            </button>
+        </form>
+
+        {% if let Some(rank) = rank %}
+        <div class="mt-6 p-4 bg-green-50 rounded-md border border-green-200 text-center">
+            <p class="text-lg text-green-800">
+                Your birthday rank is: <span class="font-bold text-2xl">{{ rank }}</span>
+            </p>
+        </div>
+        {% endif %}
+
+        {% if let Some(error) = error %}
+        <div class="mt-6 p-4 bg-red-50 rounded-md border border-red-200 text-center">
+            <p class="text-sm text-red-600">
+                {{ error }}
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
